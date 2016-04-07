@@ -1,0 +1,376 @@
+@{
+    ViewData["Title"] = "Vehicle";
+}
+
+<!-- ***** MODALS DIALOGS: BEGIN ***** -->
+<!-- modal dialogs are invisible on page load, and only showed when needed -->
+  <!-- Modal For Creating Row -->
+  <!-- rows are automatically filled with default values -->
+  <div class="modal fade" id="createVehicle" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Vehicle</h4>
+        </div>
+        <div class="modal-body">
+          <div class="validateTips">All form fields are required.</div>
+            <!-- The async form to send and replace the modals content with its response -->
+            <form id="insertVehicleForm" class="form-horizontal well" data-async data-target="createVehicle" method="post">
+                <fieldset>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Code</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="code" value="Code"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Name</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="name" value="Name"/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Issue Date</label>
+                    <div class="col-xs-5">
+                        <input type="datetime-local" class="form-control" id="issueDate" name="issueDate" value="2016-03-01T00:00:00"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Description</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="description" value="Description" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Kilometres</label>
+                    <div class="col-xs-5">
+                        <input type="number" class="form-control" id="kilometres" name="kilometres" min="0" max="1000000"  value="0"/><br/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Price</label>
+                    <div class="col-xs-5">
+                        <input type="number" class="form-control" id="price" name="price" min="0" value="0"/><br/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Purchase Date</label>
+                    <div class="col-xs-5">
+                        <input type="datetime-local" class="form-control" id="purchaseDate" name="purchaseDate" value="2016-03-01T00:00:00"/>
+                    </div>
+                </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="btnSubmit">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal For Editing Row-->
+  <!-- for a demonstration puroses some cells are disable for edit -->
+  <div class="modal fade" id="editVehicle" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Vehicle</h4>
+        </div>
+        <div class="modal-body">
+          <div class="validateTips"></div>
+            <!-- The async form to send and replace the modals content with its response -->
+            <form id="editForm" class="form-horizontal well" data-async data-target="editVehicle" method="put">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">ID</label>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" name="id" disabled="disabled" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Code</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="code" disabled="disabled" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Name</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="name" disabled="disabled" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Issue Date</label>
+                    <div class="col-xs-5">
+                        <input type="datetime-local" class="form-control" id="issueDate" name="issueDate" disabled="disabled"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Description</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" name="description" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Kilometres</label>
+                    <div class="col-xs-5">
+                        <input type="number" class="form-control" id="kilometres" name="kilometres" min="0" max="1000000"  value="0"/><br/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Price</label>
+                    <div class="col-xs-5">
+                        <input type="number" class="form-control" id="price" name="price" min="0" value="0"/><br/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Purchase Date</label>
+                    <div class="col-xs-5">
+                        <input type="datetime-local" class="form-control" id="purchaseDate" name="purchaseDate"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="editFormSubmit">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- ***** MODALS DIALOGS: END ***** -->
+
+
+<!-- ***** OUR PAGE ONLOAD: BEGIN ***** -->
+<!-- it is roughly a button to create new rows and a table header -->
+<!-- table filled using ajax from a function fillVehicleTable() -->
+<div style="padding: 5px 0px 5px 0px;">
+        <button type="button" id="addVehicle" class="btn btn-sm btn-success" data-toggle="modal" data-target="#createVehicle">
+            <i class="glyphicon glyphicon-plus">
+            </i> Add vehicle
+        </button>
+    </div>
+<table id="vehiclesTable" class="table table-bordered table-hover table-condensed tablestyle">
+    <tr onmouseenter="hoverEdit=true" onmouseleave="hoverEdit=false">
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>        
+        <th>Issue Date</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Kilometres</th>
+        <th>Purchase Date</th>
+    </tr>
+</table>
+<!-- ***** OUR PAGE ONLOAD: END ***** -->
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+            //load data to table
+            //TODO: implement loading screen
+            fillVehicleTable();
+            
+            //event binding on submitting data for modal form
+            $(document).on('click', '#editFormSubmit', function() {
+                updateForm();
+            });
+            
+            //event binding on submitting data for modal form
+            $(document).on('click', '#btnSubmit', function() {
+                insertForm();
+            });            
+        });
+        
+        function insertForm() {
+            var form = $('form#insertVehicleForm');
+            var formData = form.serializeObject();
+            
+            console.log(JSON.stringify(formData));
+            
+            var settings = {
+                url: "/vehicle",
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache"
+                },
+                data: JSON.stringify(formData),
+                success: addRow //add row on success 
+            }
+
+            $.ajax(settings).done(function (response) {
+                //TODO: implement proper response message for user
+                console.log(response);  
+                
+                //close the modal form
+                $('#createVehicle').modal('hide');
+                
+            });
+        }
+        
+        function updateForm() {
+            
+            var form = $('form#editForm');
+            var id    = form.find('[name="id"]').val();
+            var formData = form.serializeObject();
+            
+            var settings = {
+                url: "/vehicle/" + id,
+                method: "PUT",
+                headers: {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache"
+                },
+                data: JSON.stringify(formData),
+                success: function () { updateRow(id, formData); } //update row inside HTML table on success 
+            }
+
+            $.ajax(settings).done(function (response) {
+                //TODO: implement proper response message for user
+                console.log(response);
+                
+                //close the modal form
+                $('#editVehicle').modal('hide');                
+            });
+        }
+        
+        //add row to table on success, function called
+        //after successfully adding data on the server-side
+        function addRow(data)
+        {
+            drawRow(data);
+        }
+        
+        //update row to table on success, function called
+        //after successfully updateing data on the server-side
+        function updateRow(id, data) {
+            //find row in table by row id and update cells
+            var row = $('td:first-child').filter(function() {
+                return $(this).text() == id;
+            }).closest("tr")[0].childNodes;
+            
+            row[4].innerHTML = data.description;
+            row[5].innerHTML = data.price;
+            row[6].innerHTML = data.kilometres;
+            row[7].innerHTML = data.purchaseDate;
+        }
+        
+        function fillVehicleTable() {
+            $.ajax({
+                url: '/vehicle/list/',
+                type: "get",
+                dataType: "json",
+                success: function(data) {                    
+                    //using jQuery, no need to parse response
+                    fillTable(data);
+                }
+            });
+        }
+        
+        //fill table with data
+        function fillTable(data) {
+            for (var i = 0; i < data.length; i++) {
+                drawRow(data[i]);
+            }
+           
+           //after the table is filled, bind events
+           //to edit|delete buttons inside a table
+           bindEventsForTableButtons();
+        }
+        
+        //append row and fill it's cells
+        function drawRow(rowData) {
+            var row = $("<tr />")
+            $("#vehiclesTable").append(row);
+            row.append($("<td class='vehicleid'>" + rowData.id + "</td>"));
+            row.append($("<td>" + rowData.code + "</td>"));
+            row.append($("<td>" + rowData.name + "</td>"));            
+            row.append($("<td>" + rowData.issueDate + "</td>"));
+            row.append($("<td>" + rowData.description + "</td>"));
+            row.append($("<td>" + rowData.basePrice + "</td>"));
+            row.append($("<td>" + rowData.kilometres + "</td>"));
+            row.append($("<td>" + rowData.purchaseDate + "</td>"));
+            row.append($('<td class="edit" data-toggle="modal" data-target="#editVehicle"><a href="#"><i class="glyphicon glyphicon-pencil"></i></a></td>'));
+            row.append($('<td class="delete"><a href="#"><i class="glyphicon glyphicon-remove-circle"></i></a></td>'));
+        }
+        
+        function bindEventsForTableButtons() {             
+            //event binding - edit row                        
+            $(document).on('click', 'td.edit', editRow);
+            
+            //event binding - delete row
+            $(document).on('click', 'td.delete', deleteRow);
+        }
+        
+        function editRow() {
+            // Get the record's ID via attribute
+            var id = $(this).closest("tr")[0].firstChild.innerHTML;
+
+            $.ajax({
+                url: 'vehicle/' + id,
+                method: 'GET'
+            }).success(function(response) {
+                console.log(response);
+                // Fill the form with the retrieved data
+                $('form#editForm')
+                    .find('[name="id"]').val(response.id).end()
+                    .find('[name="name"]').val(response.name).end()
+                    .find('[name="code"]').val(response.code).end()
+                    .find('[name="issueDate"]').val(response.issueDate).end()
+                    .find('[name="description"]').val(response.description).end()
+                    .find('[name="kilometres"]').val(response.kilometres).end()
+                    .find('[name="price"]').val(response.basePrice).end()
+                    .find('[name="purchaseDate"]').val(response.purchaseDate).end()
+                    ;
+
+                // Show the dialog
+                $('#editForm').show();
+            });
+        }
+        
+        function deleteRow() {            
+            var row = $(this).closest("tr");
+            //get id of the row
+            var id = row[0].firstChild.innerHTML;
+            
+            var settings = {
+                url: "/vehicle/" + id,
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache"
+                },           
+                success: function () {
+                    //remove row on success from HTML table
+                    row.remove();
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                //TODO: implement proper response message for user
+                console.log(response);                
+            });
+        }
+        
+    </script>
+}
