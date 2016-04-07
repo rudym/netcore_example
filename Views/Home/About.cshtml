@@ -2,6 +2,20 @@
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<p>A tiny note about DI in .NET Core, there is no need for Aftofac or any other IoC from outside now, not any more), it is all inside ASP.Net 5. 
+The use starts from the Startup.cs source file. We add our services and theirs configurations to a method called ConfigureServices. I have added my EnityFramework configured to work with SQLite local file, plus my VehicleRepository instantiation.
+</p>
+
+<h3>Project folders:</h3>
+
+<p>Inside the <strong>DataLayer</strong> folder we have database context and repository implementation for our Vehicle entity.
+</p>
+<p><strong>Migrations</strong> folder is where Entity Framework stores the Configuration class and migrations for our database. I have added here SeedData folder with a class that makes the initial seeding to our database.
+</p>
+<p><strong>Models</strong> folder is where our business logic and our entities should be. For simplicity I have put here DTO objects too, but it is better to move it from the Models. Vehicle entity stored inside the Vehicles folder and alongside you can see interface for vehicle repository that I implemented in DataLayer. For example if we wanted to use any other method for retrieving our data, we could just make another implementation and changed it for the old one in IoC configurations in Startup.cs .
+</p>
+<p><strong>Controllers</strong>. Regarding controllers, I have built only one called VehicleController, which works with HTTP protocols alongside RESTful architecture with its configured routing.
+</p>
+<p>For the sake of simplicity in the front end I made only one View inside <strong>Views>Vehicle</strong> folder called Index.cshtml file. The html code and the script are there. The web page uses jQuery AJAX method to make its  requests to our server.
+</p>
