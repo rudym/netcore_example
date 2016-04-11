@@ -236,7 +236,7 @@
             
             var settings = {
                 url: "/vehicle/" + id,
-                method: "PUT",
+                method: "PATCH", //we are making only partial update
                 headers: {
                     "content-type": "application/json",
                     "cache-control": "no-cache"

@@ -79,10 +79,40 @@ namespace VehWebApp.Controllers
 
             }
         }
+        
+        // PUT full update vehicle/5
+        [HttpPut("{id:int}")]
+        public IActionResult Put(int id, [FromBody]VehicleDto vehicleDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new ObjectResult("Vehicle data is invalid");
+            }
+            else
+            {   
+                var vehicle = new UsedVehicle()
+                {
+                    Id = id,
+                    Code = vehicleDto.Code,
+                    Name = vehicleDto.Name,
+                    Description = vehicleDto.Description,
+                    IssueDate = vehicleDto.IssueDate,
+                    Kilometres = vehicleDto.Kilometres,
+                    PurchaseDate = vehicleDto.PurchaseDate,
+                    BasePrice = vehicleDto.Price
+                };
 
-        // PUT vehicle/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]UpdateVehicleInput vehicleInput)
+                _vehicleRepository.UpdateVehicle(vehicle);
+                _vehicleRepository.Save();
+            }
+
+            //TODO: validate update, catch errors
+            return new ObjectResult("Vehicle data update completed.");
+        }
+
+        // PATCH partial update vehicle/5
+        [HttpPatch("{id:int}")]
+        public IActionResult Patch(int id, [FromBody]UpdateVehicleInput vehicleInput)
         {
             if (!ModelState.IsValid)
             {
@@ -108,7 +138,7 @@ namespace VehWebApp.Controllers
         }
 
         // DELETE vehicle/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             if (!ModelState.IsValid)
